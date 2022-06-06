@@ -1,0 +1,23 @@
+# - name: tenant1
+#   slug: tenant1
+# - name: tenant2
+#   slug: tenant2
+#   group: Tenant Group 2
+
+- name: Engineering
+  slug: engineering 
+  group: Internal 
+- name: Security 
+  slug: security
+  group: Internal 
+- name: Sales 
+  slug: sales 
+  group: Internal 
+
+- name: Acme
+  slug: acme 
+  group: Customers 
+- name: Emerald 
+  slug: emerald
+  group: Customers
+
