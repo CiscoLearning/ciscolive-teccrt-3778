@@ -1,0 +1,10 @@
+logs/ 
+ncs-cdb/ 
+packages/ 
+scripts/ 
+state/ 
+ncs.conf 
+README.ncs 
+target/ 
+storedstate
+netsim/
