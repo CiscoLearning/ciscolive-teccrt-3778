@@ -9,3 +9,12 @@ A curl command for each of the following targeting the NetBox API:
 
 ## Preperation and Setup Instructions
 To prepare the CWS to work on this question you must first startup a NetBox instance.  This is easily done using the [netbox-docker](https://github.com/netbox-community/netbox-docker) project.  For 
+
+
+# Resources and Thanks 
+Several open source projects were used in building this demonstration and example case study.  I wanted to call them out and say thanks for their great work. 
+
+* First and most obviously, the [NetBox](https://github.com/netbox-community/netbox) project
+* The [netbox-docker](https://github.com/netbox-community/netbox-docker) project makes running NetBox via docker very simple 
+* The [NetBox device-types-library](https://github.com/netbox-community/device-types-library) project that has provided a simple and standard way for NetBox users to share device types for all the network devices we use 
+* The [Netbox-Device-Type-Library-Import](https://github.com/minitriga/Netbox-Device-Type-Library-Import) project that makes importing the 500+ Cisco device types in the library easy and complete in 4 minutes 
