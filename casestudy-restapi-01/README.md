@@ -4,7 +4,8 @@ After numerous human error issues with change control submissions involving devi
 A curl command for each of the following targeting the NetBox API: 
 
 * Generation of a new authentication token for a user
-* A listing of all Nexus switches currently in inventory at site “DC1” unassigned to any tenant
+* A listing of all managment switches currently in inventory at site “DC1” unassigned to any tenant
+    * Note: management switches are indicated by the inclusion of `mgmt` in the device name
 * A list of all possible device interface type options
 
 ## Preperation and Setup Instructions
