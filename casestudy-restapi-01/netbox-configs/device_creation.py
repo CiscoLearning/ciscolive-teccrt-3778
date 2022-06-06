@@ -21,7 +21,7 @@ if __name__ == "__main__":
     tenants.append(None)
     switch_role = nb.dcim.device_roles.get(name="switch")
     device_types = nb.dcim.device_types.all()
-    device_status = nb.dcim.devices.choices()["status"]
+    device_statuses = nb.dcim.devices.choices()["status"]
     switch_types = [
         dtype
         for dtype in device_types
@@ -31,12 +31,16 @@ if __name__ == "__main__":
     for i in range(0, 1000):
         site = random.choice(sites)
         tenant = random.choice(tenants)
-        print(f"Creating device {site.slug}-switch-{i}")
+        device_type = random.choice(switch_types)
+        device_status = random.choice(device_statuses)["value"]
+        code = "mgmt" if "Catalyst" in device_type.model else "tor"
+        device_name = f"{site.slug}-{code}-switch-{i}"
+        print(f"Creating device {device_name}")
         device = nb.dcim.devices.create(
-            name=f"{site.slug}-switch-{i}",
+            name=device_name,
             site=site.id,
             tenant=tenant.id if tenant is not None else None,
             device_role=switch_role.id,
-            device_type=random.choice(switch_types).id,
-            status=random.choice(device_status)["value"],
+            device_type=device_type.id,
+            status=random.choice(device_statuses)["value"],
         )
