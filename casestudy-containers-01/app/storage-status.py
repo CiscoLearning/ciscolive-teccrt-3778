@@ -36,6 +36,7 @@ def get_status() -> Response:
         results.append(element)
 
     cur.close()
+    conn.close()
 
     return jsonify(results)
 
