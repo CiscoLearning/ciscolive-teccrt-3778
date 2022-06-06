@@ -7,6 +7,7 @@ setup:
 	if [[ ! -d netbox-docker ]]; then git clone -b release https://github.com/netbox-community/netbox-docker.git; else cd netbox-docker && git pull; fi
 	cp netbox-configs/docker-compose.override.yml netbox-docker/
 	cp -r netbox-configs/demo-initializers netbox-docker/
+	cp netbox-configs/000_users.py netbox-docker/startup_scripts
 	cd netbox-docker && docker-compose pull
 
 startup-netbox:
