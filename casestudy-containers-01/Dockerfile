@@ -6,7 +6,7 @@ RUN pip install -r /app/requirements.txt
 # TODO:
 #   * Indicate that the app will use tcp/80
 #   * Indicate the app requires a volume, /app/db
-#   * Indicate the app requires an environment variable, STORAGE_DB_API
+#   * Indicate the app requires an environment variable, STORAGE_DB_API that defaults to ./storage.db
 
 WORKDIR /app
 

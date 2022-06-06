@@ -14,8 +14,8 @@ NAME=storage-status
 IMAGE=${NAME}
 
 docker build -t ${IMAGE} -f Dockerfile .
-docker stop ${NAME}
-docker rm ${NAME}
+docker stop ${NAME} 2>/dev/null
+docker rm ${NAME} 2>/dev/null
 
 # TODO
 #   Uncomment and then flesh out the `docker run` command below such that:
