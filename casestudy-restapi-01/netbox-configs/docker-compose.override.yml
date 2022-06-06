@@ -3,3 +3,5 @@ services:
   netbox:
     ports:
     - 8000:8080
+    volumes:
+    - ./demo-initializers:/opt/netbox/initializers:z,ro ## <-- Replace `my_initializers` with the name of your folder
