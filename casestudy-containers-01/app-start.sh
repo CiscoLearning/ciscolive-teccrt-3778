@@ -20,7 +20,7 @@ docker rm ${NAME} 2>/dev/null
 # TODO
 #   Uncomment and then flesh out the `docker run` command below such that:
 #   * The ./db directory is mounted at /app/db in the container
-#   * The value of the DB_FILE environment variable is passed as STORAGE_API_DB in the container
+#   * The value of the DB_FILE environment variable is passed as STORAGE_API_DB to the container
 #   * The port specified in the environment variable APP_PORT is mapped to the app's tcp/80
 #   * The container's image can be referenced as ${IMAGE}
 
