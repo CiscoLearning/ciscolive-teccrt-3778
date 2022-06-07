@@ -1,7 +1,20 @@
 # -*- mode: python; python-indent: 4 -*-
 import ncs
 from ncs.application import Service
+import ipaddress
 
+def acl_address(address: str) -> str:
+    """Convert a YANG address or network to ACL format"""
+    address = ipaddress.ip_network(address)
+    if address.netmask == ipaddress.IPv4Address('255.255.255.255'):
+        acl_address = f"host {address.network_address}"
+    elif address.netmask == ipaddress.IPv4Address('0.0.0.0') and address.network_address == ipaddress.IPv4Address('0.0.0.0'):
+        acl_address = f"any"            
+    else: 
+        acl_address = f"{address.network_address} {address.hostmask}"
+    
+    return acl_address
+    
 
 class ServiceCallbacks(Service):
 
@@ -16,16 +29,19 @@ class ServiceCallbacks(Service):
 
         # Loop over rules 
         for i, rule in enumerate(service.rule): 
-            vars.add("DESCRIPTION", f"Rule {rule.name} index {i} in ACL Service {service.name}. Description {rule.description}")
+            self.log.info(f"Creating rule [{rule.name}]")
+            ace_seq = (i+1)*10
+            vars.add("LABEL_SEQ", ace_seq)
+            vars.add("DESC_SEQ", ace_seq+1)
+            vars.add("SEQ", ace_seq+2)
+            vars.add("LABEL", f"Rule {rule.name} in ACL Service {service.name}")
+            vars.add("DESCRIPTION", f"Description {rule.description}")
             vars.add("ACTION", rule.action)
             vars.add("PROTOCOL", rule.protocol)
-            # TODO: determine source address based on service input 
-            #       any, host, network 
-            vars.add("SOURCE_ADDRESS", "any")
+            vars.add("SOURCE_ADDRESS", acl_address(rule.source.address))
             # TODO: determine source port 
             vars.add("SOURCE_PORT", "")
-            # TODO: base destionation address on service input 
-            vars.add("DESTINATION_ADDRESS", "192.168.10.0 0.0.0.255")
+            vars.add("DESTINATION_ADDRESS", acl_address(rule.destination.address))
             # TODO: detemrine destination port based on service input 
             vars.add("DESTINATION_PORT", "eq 80")
             # TODO: determine how to identify if log is set or not 
@@ -34,6 +50,7 @@ class ServiceCallbacks(Service):
             # loop over devices to apply 
             for device in service.device: 
                 vars.add("DEVICE_NAME", device)
+                self.log.info(f"vars: {vars}")
                 template.apply('acl-service-template', vars)
 
 
