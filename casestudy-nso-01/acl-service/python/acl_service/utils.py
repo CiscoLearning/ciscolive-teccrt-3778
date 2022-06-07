@@ -77,7 +77,7 @@ def acl_rule_builder(
     src_port: int,
     dst_address: str,
     dst_port: int,
-    log: str,
+    log: bool,
 ) -> str:
     """Create a formated IOS ACL rule"""
     # Create list of all components for rule
@@ -89,7 +89,7 @@ def acl_rule_builder(
         acl_port(src_port),
         acl_address(dst_address),
         acl_port(dst_port),
-        str(log),
+        "log" if log else "",
     ]
     # Join into a string
     acl_rule = " ".join(rule_components)

@@ -31,7 +31,7 @@ class ServiceCallbacks(Service):
                 rule.source.port,
                 rule.destination.address,
                 rule.destination.port,
-                rule.log,
+                rule.log.exists(),
             )
             vars.add("RULE", acl_rule)
 
@@ -58,7 +58,7 @@ class ServiceCallbacks(Service):
             None,
             "0.0.0.0/0",
             None,
-            "log",
+            True,
         )
         vars.add("RULE", acl_rule)
 
