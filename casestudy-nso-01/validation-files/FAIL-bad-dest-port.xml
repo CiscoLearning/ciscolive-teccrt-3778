@@ -1,0 +1,19 @@
+<config xmlns="http://tail-f.com/ns/config/1.0">
+  <access-list xmlns="http://example.com/acl-service">
+    <name>web-servers</name>
+    <device>ios-1</device>
+    <rule>
+      <name>https-web1</name>
+      <description>Allow inbound https access</description>
+      <action>permit</action>
+      <protocol>tcp</protocol>
+      <source>
+        <address>0.0.0.0/0</address>
+      </source>
+      <destination>
+        <address>192.168.10.11</address>
+        <port>9443</port>
+      </destination>
+    </rule>
+  </access-list>
+</config>
