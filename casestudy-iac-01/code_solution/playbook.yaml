@@ -1,0 +1,9 @@
+
+- name: Create ACI Topology
+  hosts: all
+  gather_facts: no
+
+  tasks:
+  - name: Call create_tenant_ap_epg role
+    ansible.builtin.include_role:
+      name: create_tenant_ap_epg

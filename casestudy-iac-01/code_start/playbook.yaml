@@ -1,0 +1,31 @@
+
+- name: Create ACI Topology
+  hosts: all
+  gather_facts: no
+
+  vars:
+    aci_login: &aci_login
+      hostname: '{{ apic_host }}'
+      username: '{{ apic_username }}'
+      password: '{{ apic_password }}'
+      use_proxy: '{{ apic_use_proxy }}'
+      validate_certs: '{{ apic_validate_certs }}'
+
+  tasks:
+  - name: Create tenants
+    cisco.aci.aci_tenant:
+      <<: *aci_login
+      tenant: '{{ item.name }}'
+    loop: '{{ tenants }}'
+    delegate_to: localhost
+
+  - name: Create application profiles
+    cisco.aci.aci_ap:
+      <<: *aci_login
+    delegate_to: localhost
+
+  - name: Create EPGs
+    cisco.aci.aci_epg:
+      <<: *aci_login
+    delegate_to: localhost
+
