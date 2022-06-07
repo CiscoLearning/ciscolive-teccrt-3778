@@ -9,10 +9,13 @@
               <ext-named-acl>
                 <name>{$ACL_NAME}</name>
                 <ext-access-list-rule>
-                  <rule>remark {$DESCRIPTION}</rule>
+                  <rule>{$LABEL_SEQ} remark {$LABEL}</rule>
                 </ext-access-list-rule>
                 <ext-access-list-rule>
-                  <rule>{$ACTION} {$PROTOCOL} {$SOURCE_ADDRESS} {$SOURCE_PORT} {$DESTINATION_ADDRESS} {$DESTINATION_PORT} {$LOG}</rule>
+                  <rule>{$DESC_SEQ} remark {$DESCRIPTION}</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <rule>{$SEQ} {$ACTION} {$PROTOCOL} {$SOURCE_ADDRESS} {$SOURCE_PORT} {$DESTINATION_ADDRESS} {$DESTINATION_PORT} {$LOG}</rule>
                 </ext-access-list-rule>
               </ext-named-acl>
             </extended>
