@@ -14,19 +14,19 @@ module acl-service {
   }
 
   description
-    "Bla bla...";
+    "A simple access list module";
 
-  revision 2016-01-01 {
+  revision 2022-06-03 {
     description
       "Initial revision.";
   }
 
-  list acl-service {
-    description "This is an RFS skeleton service";
+  list access-list {
+    description "A basic access-list definition";
 
     key name;
     leaf name {
-      tailf:info "Unique service id";
+      tailf:info "Unique name for this access-list";
       tailf:cli-allow-range;
       type string;
     }
@@ -34,16 +34,12 @@ module acl-service {
     uses ncs:service-data;
     ncs:servicepoint acl-service-servicepoint;
 
-    // may replace this with other ways of refering to the devices.
     leaf-list device {
+      tailf:info "The devices where this ACL will be created";
       type leafref {
         path "/ncs:devices/ncs:device/ncs:name";
       }
     }
 
-    // replace with your own stuff here
-    leaf dummy {
-      type inet:ipv4-address;
-    }
   }
 }
