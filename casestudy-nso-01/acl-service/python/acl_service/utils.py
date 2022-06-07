@@ -56,3 +56,14 @@ def acl_address(address: str) -> str:
         acl_address = f"{address.network_address} {address.hostmask}"
 
     return acl_address
+
+
+def acl_port(port: str) -> str:
+    """Determine the correct format for ACL port"""
+    if port is None:
+        acl_port = ""
+    else:
+        # Space added before "eq" to ensure single space between address
+        # and port in configuration
+        acl_port = f" eq {ios_acl_port_map[port]['name'] if port in ios_acl_port_map.keys() else port}"
+    return acl_port
