@@ -1,19 +1,7 @@
 # -*- mode: python; python-indent: 4 -*-
 import ncs
 from ncs.application import Service
-import ipaddress
-
-def acl_address(address: str) -> str:
-    """Convert a YANG address or network to ACL format"""
-    address = ipaddress.ip_network(address)
-    if address.netmask == ipaddress.IPv4Address('255.255.255.255'):
-        acl_address = f"host {address.network_address}"
-    elif address.netmask == ipaddress.IPv4Address('0.0.0.0') and address.network_address == ipaddress.IPv4Address('0.0.0.0'):
-        acl_address = f"any"            
-    else: 
-        acl_address = f"{address.network_address} {address.hostmask}"
-    
-    return acl_address
+from utils import ios_acl_port_map, acl_address
     
 
 class ServiceCallbacks(Service):
