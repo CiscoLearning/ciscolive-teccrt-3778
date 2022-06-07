@@ -101,5 +101,18 @@
       </destination>
       <log/>
     </rule>
+    <rule>
+      <name>no-log</name>
+      <description>Allow telnet access - no log</description>
+      <action>permit</action>
+      <protocol>tcp</protocol>
+      <source>
+        <address>192.168.5.0/26</address>
+      </source>
+      <destination>
+        <address>192.168.17.16</address>
+        <port>23</port>
+      </destination>
+    </rule>
   </access-list>
 </config>
