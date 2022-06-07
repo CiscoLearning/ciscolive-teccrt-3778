@@ -1,7 +1,6 @@
 lab:
-  description: ''
-  notes: ''
-  timestamp: 1654614892.992166
+  description: ""
+  notes: ""
   title: Case Study Telemetry
   version: 0.0.4
 nodes:
@@ -10,7 +9,8 @@ nodes:
     node_definition: cat8000v
     x: -550
     y: -100
-    configuration: "Building configuration...\n\nCurrent configuration : 4068 bytes\n\
+    configuration:
+      "Building configuration...\n\nCurrent configuration : 4068 bytes\n\
       !\n! Last configuration change at 15:47:42 UTC Tue Jun 7 2022\n!\nversion 17.5\n\
       service timestamps debug datetime msec\nservice timestamps log datetime msec\n\
       ! Call-home is enabled by Smart-Licensing.\nservice call-home\nplatform qfp\
@@ -66,7 +66,12 @@ nodes:
       \ Smart License Portal will be used as contact email address to send SCH notifications.\n\
       \ contact-email-addr sch-smart-licensing@cisco.com\n profile \"CiscoTAC-1\"\n\
       \  active\n  destination transport-method http\n!\n!\n!\n!\n!\n!\nend"
-    image_definition: catalyst8000v-17.05.01a
+    hide_links: null
+    ram: 4096
+    cpus: 1
+    cpu_limit: 100
+    data_volume: 0
+    boot_disk_size: 0
     tags: []
     interfaces:
       - id: i0
@@ -225,7 +230,13 @@ nodes:
       !
       !
       end
+    hide_links: null
     image_definition: iosvl2-2020
+    ram: 768
+    cpus: 1
+    cpu_limit: 100
+    data_volume: 0
+    boot_disk_size: 0
     tags: []
     interfaces:
       - id: i0
@@ -252,7 +263,13 @@ nodes:
     node_definition: unmanaged_switch
     x: -800
     y: 0
-    configuration: ''
+    configuration: ums-52cac65a-f1
+    hide_links: null
+    ram: 0
+    cpus: 0
+    cpu_limit: 100
+    data_volume: 0
+    boot_disk_size: 0
     tags: []
     interfaces:
       - id: i0
@@ -288,18 +305,6 @@ nodes:
         label: port7
         type: physical
   - id: n3
-    label: bridge1
-    node_definition: external_connector
-    x: -1000
-    y: -100
-    configuration: bridge1
-    tags: []
-    interfaces:
-      - id: i0
-        slot: 0
-        label: port
-        type: physical
-  - id: n4
     label: user-01
     node_definition: iosv
     x: -400
@@ -451,7 +456,13 @@ nodes:
        action 004 cli command "renew dhcp gi0/0"
       !
       end
+    hide_links: null
     image_definition: iosv-159-3-m3
+    ram: 512
+    cpus: 1
+    cpu_limit: 100
+    data_volume: 0
+    boot_disk_size: 0
     tags: []
     interfaces:
       - id: i0
@@ -473,29 +484,80 @@ nodes:
         slot: 3
         label: GigabitEthernet0/3
         type: physical
+  - id: n4
+    label: cws
+    node_definition: cws
+    x: -1051
+    y: -4
+    configuration: ""
+    hide_links: false
+    ram: 6144
+    cpus: 4
+    cpu_limit: 100
+    data_volume: 1
+    boot_disk_size: 50
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: ens3
+        type: physical
+      - id: i1
+        slot: 1
+        label: ens4
+        type: physical
+  - id: n5
+    label: Internet
+    node_definition: external_connector
+    x: -1255
+    y: -7
+    configuration: bridge0
+    hide_links: false
+    ram: 0
+    cpus: 0
+    cpu_limit: 100
+    data_volume: 0
+    boot_disk_size: 0
+    tags: []
+    interfaces:
+      - id: i0
+        slot: 0
+        label: port
+        type: physical
 links:
   - id: l0
     i1: i1
     n1: n0
     i2: i0
     n2: n2
+    label: rtr-br003-01-GigabitEthernet1<->candidate-network-port0
   - id: l1
     i1: i1
     n1: n1
     i2: i1
     n2: n2
+    label: sw-br003-01-GigabitEthernet0/0<->candidate-network-port1
   - id: l2
-    i1: i2
-    n1: n2
-    i2: i0
-    n2: n3
-  - id: l3
     i1: i2
     n1: n0
     i2: i2
     n2: n1
+    label: rtr-br003-01-GigabitEthernet2<->sw-br003-01-GigabitEthernet0/1
+  - id: l3
+    i1: i3
+    n1: n1
+    i2: i1
+    n2: n3
+    label: sw-br003-01-GigabitEthernet0/2<->user-01-GigabitEthernet0/0
   - id: l4
+    i1: i0
+    n1: n5
+    i2: i0
+    n2: n4
+    label: ext-conn-0-port<->cws-ens3
+  - id: l5
     i1: i1
     n1: n4
-    i2: i3
-    n2: n1
+    i2: i2
+    n2: n2
+    label: cws-ens4<->candidate-network-port2
