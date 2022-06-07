@@ -17,7 +17,7 @@ class ServiceCallbacks(Service):
 
         # Loop over rules 
         for i, rule in enumerate(service.rule): 
-            vars.add("DESCRIPTION", f"Rule {i} in ACL Service {service.name}. Description {rule.description}")
+            vars.add("DESCRIPTION", f"Rule {rule.name} index {i} in ACL Service {service.name}. Description {rule.description}")
             vars.add("ACTION", rule.action)
             vars.add("PROTOCOL", rule.protocol)
             vars.add("SOURCE_ADDRESS", "any")
