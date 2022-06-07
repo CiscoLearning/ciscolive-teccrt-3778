@@ -28,7 +28,9 @@ module acl-service {
     leaf name {
       tailf:info "Unique name for this access-list";
       tailf:cli-allow-range;
-      type string;
+      type string {
+        pattern '[\S]*';
+      } 
     }
 
     uses ncs:service-data;
@@ -60,7 +62,7 @@ module acl-service {
       leaf name {
         tailf:info "The name for this rule.";
         type string {
-          pattern '[a-zA-Z0-9]*';
+          pattern '[\S]*';
         } 
       }
 
