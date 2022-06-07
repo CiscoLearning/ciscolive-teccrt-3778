@@ -4,6 +4,9 @@ setup: setup-netsim setup-nso
 start: setup start-apps syncfrom
 clean: clean-nso clean-netsim 
 
+setup-solution: setup-netsim setup-nso-solution
+start-solution: setup-solution start-apps syncfrom
+
 start-apps: start-netsim start-nso check-nso-up
 stop-apps: stop-netsim stop-nso
 
@@ -11,6 +14,13 @@ setup-nso:
 	ncs-setup \
 		--package ~/nso/packages/neds/cisco-ios-cli-6.77 \
 		--package ./acl-service \
+		--dest .
+
+setup-nso-solution:
+	cd solution/acl-service/src && make 
+	ncs-setup \
+		--package ~/nso/packages/neds/cisco-ios-cli-6.77 \
+		--package ./solution/acl-service \
 		--dest .
 
 clean-nso: stop-nso
