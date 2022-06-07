@@ -41,5 +41,16 @@ module acl-service {
       }
     }
 
+    container default {
+      tailf:info "Default behaviors for the ACL";
+      leaf rule { 
+        tailf:info "Whether the ACL will end with a default DENY or PERMIT";
+        type enumeration {
+          enum deny;
+          enum permit; 
+        }
+
+      }
+    }
   }
 }
