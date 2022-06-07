@@ -4,6 +4,6 @@ services:
     image: telegraf:1.19
     volumes:
     - ./telegraf/etc/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-    - ./telegraf/metrics.json:/tmp/metrics.json
+    - ./telegraf/metrics:/tmp/metrics
     ports:
     - '57000:57000'

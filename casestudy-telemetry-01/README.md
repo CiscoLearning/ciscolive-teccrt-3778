@@ -1,6 +1,6 @@
 # Troubleshoot YANG XPath for Telemetry Subscription
 
-This case study deals with using YANG-based model-driven telemetry.  In the setup for this task, a subscription has been created to monitor DHCP pool capacity, but the subscription is being reported as "Invalid".  One must use tools such as `pyang` or YANG Suite to determine the correct XPath and fix the telemetry subscription.
+This case study deals with using YANG-based model-driven telemetry.  In the setup for this task, a subscription has been created to monitor memory allocation utilization of a known-problematic process, but the subscription is being reported as "Invalid".  One must use tools such as `pyang` or YANG Suite to determine the correct XPath and fix the telemetry subscription.
 
 The telemetry data will be processed by Telegraf, which will be running within a Docker container on the Candidate Workstation image.  The element sending the telemetry is a Catalyst 8000v, which is acting as the default gateway for a remote branch office.  Cisco Modeling Labs (CML) is required for this task.  A topology file is provided in `Case Study Telemetry.yaml`, which can be imported into a CML Personal, Enterprise, or Education server.  CML 2.3 or higher is required.
 
@@ -32,3 +32,5 @@ docker-compose up -d
 ```
 
 This will start Telegraf on the CWS listening on the correct port.
+
+Note that the CWS is also connected to the external network via the default bridge0.  This means that if you have a DHCP server on your CML server's network, the CWS will get an address from that, and then be reachable via SSH and RDP using the "expert" credentials shown above.
