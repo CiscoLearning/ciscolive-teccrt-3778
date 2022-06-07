@@ -15,7 +15,7 @@
                   <rule>{$DESC_SEQ} remark {$DESCRIPTION}</rule>
                 </ext-access-list-rule>
                 <ext-access-list-rule>
-                  <rule>{$SEQ} {$ACTION} {$PROTOCOL} {$SOURCE_ADDRESS} {$SOURCE_PORT} {$DESTINATION_ADDRESS} {$DESTINATION_PORT} {$LOG}</rule>
+                  <rule>{$SEQ} {$ACTION} {$PROTOCOL} {$SOURCE_ADDRESS}{$SOURCE_PORT} {$DESTINATION_ADDRESS}{$DESTINATION_PORT} {$LOG}</rule>
                 </ext-access-list-rule>
               </ext-named-acl>
             </extended>
