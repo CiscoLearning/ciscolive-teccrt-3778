@@ -1,7 +1,7 @@
 # -*- mode: python; python-indent: 4 -*-
 import ncs
 from ncs.application import Service
-from .utils import ios_acl_port_map, acl_address, acl_port
+from .utils import ios_acl_port_map, acl_address, acl_port, acl_rule_builder
 
 
 class ServiceCallbacks(Service):
@@ -23,20 +23,50 @@ class ServiceCallbacks(Service):
             vars.add("SEQ", ace_seq + 2)
             vars.add("LABEL", f"Rule {rule.name} in ACL Service {service.name}")
             vars.add("DESCRIPTION", f"Description {rule.description}")
-            vars.add("ACTION", rule.action)
-            vars.add("PROTOCOL", rule.protocol)
-            vars.add("SOURCE_ADDRESS", acl_address(rule.source.address))
-            vars.add("SOURCE_PORT", acl_port(rule.source.port))
-            vars.add("DESTINATION_ADDRESS", acl_address(rule.destination.address))
-            vars.add("DESTINATION_PORT", acl_port(rule.destination.port))
+            acl_rule = acl_rule_builder(
+                ace_seq + 2,
+                rule.action,
+                rule.protocol,
+                rule.source.address,
+                rule.source.port,
+                rule.destination.address,
+                rule.destination.port,
+                rule.log,
+            )
+            vars.add("RULE", acl_rule)
+
             # TODO: determine how to identify if log is set or not
-            vars.add("LOG", rule.log)
 
             # loop over devices to apply
             for device in service.device:
                 vars.add("DEVICE_NAME", device)
                 self.log.info(f"vars: {vars}")
                 template.apply("acl-service-template", vars)
+
+        self.log.info(f"Creating default rule as [{service.default.rule}]")
+        ace_seq = (i + 10) * 10
+        vars.add("LABEL_SEQ", ace_seq)
+        vars.add("DESC_SEQ", ace_seq + 1)
+        vars.add("SEQ", ace_seq + 2)
+        vars.add("LABEL", f"Default Rule in ACL Service {service.name}")
+        vars.add("DESCRIPTION", f"Description {service.default.rule} all")
+        acl_rule = acl_rule_builder(
+            ace_seq + 2,
+            service.default.rule,
+            "ip",
+            "0.0.0.0/0",
+            None,
+            "0.0.0.0/0",
+            None,
+            "log",
+        )
+        vars.add("RULE", acl_rule)
+
+        # loop over devices to apply
+        for device in service.device:
+            vars.add("DEVICE_NAME", device)
+            self.log.info(f"vars: {vars}")
+            template.apply("acl-service-template", vars)
 
 
 # ---------------------------------------------
