@@ -12,7 +12,6 @@
                   <rule>remark {$DESCRIPTION}</rule>
                 </ext-access-list-rule>
                 <ext-access-list-rule>
-                  <!-- <rule>permit tcp any 192.168.0.0 0.0.0.255 eq 80</rule> -->
                   <rule>{$ACTION} {$PROTOCOL} {$SOURCE_ADDRESS} {$SOURCE_PORT} {$DESTINATION_ADDRESS} {$DESTINATION_PORT} {$LOG}</rule>
                 </ext-access-list-rule>
               </ext-named-acl>
