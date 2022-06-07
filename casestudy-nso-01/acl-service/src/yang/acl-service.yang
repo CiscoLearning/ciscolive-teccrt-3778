@@ -49,8 +49,88 @@ module acl-service {
           enum deny;
           enum permit; 
         }
-
       }
+    }
+
+    list rule {
+      tailf:info "The list of rules in this access-list";
+      ordered-by user;
+      key name; 
+
+      leaf name {
+        tailf:info "The name for this rule";
+        type string; 
+      }
+
+      leaf description {
+        tailf:info "The purpose for this rule in the access-list";
+        type string; 
+      }
+
+      leaf action {
+        mandatory true;
+        tailf:info "Whether this rule is to deny or permit traffic";
+        type enumeration {
+          enum deny; 
+          enum permit;
+        }
+      }
+
+      leaf protocol { 
+        mandatory true;
+        tailf:info "tcp/udp";
+        type enumeration {
+          enum tcp; 
+          enum udp; 
+        }
+      }
+
+      container source {
+        tailf:info "The source details for this rule";
+
+        leaf address {
+          mandatory true;
+          tailf:info "The source address for this rule";
+          type union {
+            type inet:ipv4-address;
+            type inet:ipv4-prefix;
+          }
+        }
+
+        leaf port {
+          tailf:info "The source port (if different from destination) for this rule";
+          type uint16{
+            range 0..65535;
+          }
+        }
+      }
+
+      container destination {
+        tailf:info "The destination details for this rule";
+
+        leaf address {
+          mandatory true;
+          tailf:info "The destination address for this rule";
+          type union {
+            type inet:ipv4-address;
+            type inet:ipv4-prefix;
+          }
+        }
+
+        leaf port {
+          mandatory true;
+          tailf:info "The destination port for this rule";
+          type uint16{
+            range 1..1024;
+          }
+        }
+      }
+
+      leaf log {
+        tailf:info "Whether to log hits to this rule";
+        type empty;
+      }
+
     }
   }
 }
