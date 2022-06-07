@@ -25,12 +25,11 @@ module acl-service {
     description "A basic access-list definition";
 
     key name;
+    // TODO: ACL names can NOT have whitespace
     leaf name {
       tailf:info "Unique name for this access-list";
       tailf:cli-allow-range;
-      type string {
-        pattern '[\S]*';
-      } 
+      type string; 
     }
 
     uses ncs:service-data;
@@ -46,11 +45,9 @@ module acl-service {
     container default {
       tailf:info "Default behaviors for the ACL";
       leaf rule { 
-        tailf:info "Whether the ACL will end with a default DENY or PERMIT";
-        type enumeration {
-          enum deny;
-          enum permit; 
-        }
+        tailf:info "Whether the ACL will end with a default deny or permit";
+        // TODO: Only the valus of "deny" or "permit" should be allowed
+        type string;
         default deny;
       }
     }
@@ -60,11 +57,10 @@ module acl-service {
       ordered-by user;
       key name; 
 
+      // TODO: Rule names can NOT have whitespace
       leaf name {
         tailf:info "The name for this rule.";
-        type string {
-          pattern '[\S]*';
-        } 
+        type string;
       }
 
       leaf description {
@@ -75,19 +71,15 @@ module acl-service {
       leaf action {
         mandatory true;
         tailf:info "Whether this rule is to deny or permit traffic";
-        type enumeration {
-          enum deny; 
-          enum permit;
-        }
+        // TODO: Only the valus of "deny" or "permit" should be allowed
+        type string;
       }
 
       leaf protocol { 
         mandatory true;
         tailf:info "tcp/udp";
-        type enumeration {
-          enum tcp; 
-          enum udp; 
-        }
+        // TODO: Only the valus of "tcp" or "udp" should be allowed
+        type string;
       }
 
       container source {
@@ -96,17 +88,13 @@ module acl-service {
         leaf address {
           mandatory true;
           tailf:info "The source address for this rule";
-          type union {
-            type inet:ipv4-address;
-            type inet:ipv4-prefix;
-          }
+          // TODO: allow IPv4 address or prefix based on ietf-inet-types
+          type string;
         }
 
         leaf port {
           tailf:info "The source port (if different from destination) for this rule";
-          type uint16{
-            range 0..65535;
-          }
+          type uint16;
         }
       }
 
@@ -116,24 +104,22 @@ module acl-service {
         leaf address {
           mandatory true;
           tailf:info "The destination address for this rule";
-          type union {
-            type inet:ipv4-address;
-            type inet:ipv4-prefix;
-          }
+          // TODO: allow IPv4 address or prefix based on ietf-inet-types
+          type string;
         }
 
         leaf port {
           mandatory true;
           tailf:info "The destination port for this rule";
-          type uint16{
-            range 1..1024;
-          }
+          // TODO: Only allow well known ports (1 - 1024)
+          type uint16;
         }
       }
 
       leaf log {
         tailf:info "Whether to log hits to this rule";
-        type empty;
+        // TODO: The log leaf should either be present or not
+        type string;
       }
 
     }

@@ -39,6 +39,7 @@ class ServiceCallbacks(Service):
             for device in service.device:
                 vars.add("DEVICE_NAME", device)
                 self.log.info(f"vars: {vars}")
+                # TODO: Apply the template named "acl-service-template" using the configured vars
                 template.apply("acl-service-template", vars)
 
         # Add Default Rule
@@ -65,7 +66,7 @@ class ServiceCallbacks(Service):
         for device in service.device:
             vars.add("DEVICE_NAME", device)
             self.log.info(f"vars: {vars}")
-            template.apply("acl-service-template", vars)
+            # TODO: Apply the template named "acl-service-template" using the configured vars
 
 
 # ---------------------------------------------

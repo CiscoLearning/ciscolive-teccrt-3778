@@ -1,21 +1,26 @@
 <config-template xmlns="http://tail-f.com/ns/config/1.0">
   <devices xmlns="http://tail-f.com/ns/ncs">
     <device>
-      <name>{$DEVICE_NAME}</name>
+      <!-- TODO: Provide the proper variable for device -->
+      <name>NETWORK_DEVICE</name>
       <config>
         <ip xmlns="urn:ios">
           <access-list>
             <extended>
               <ext-named-acl>
-                <name>{$ACL_NAME}</name>
+                <!-- TODO: Provide the proper variable for ACL name -->
+                <name>ACL</name>
                 <ext-access-list-rule>
-                  <rule>{$LABEL_SEQ} remark {$LABEL}</rule>
+                  <!-- TODO: Update "label" rule to include the correct sequence and value -->
+                  <rule>LABEL_# remark LABEL_TEXT</rule>
                 </ext-access-list-rule>
                 <ext-access-list-rule>
-                  <rule>{$DESC_SEQ} remark {$DESCRIPTION}</rule>
+                  <!-- TODO: Update the "description" rule to include correct sequence and value -->
+                  <rule>DESC # remark DESCRIPTION_TEXT</rule>
                 </ext-access-list-rule>
                 <ext-access-list-rule>
-                  <rule>{$RULE}</rule>
+                  <!-- TODO: Provide the proper variable for the rule line -->
+                  <rule>RULE_LINE</rule>
                 </ext-access-list-rule>
               </ext-named-acl>
             </extended>
@@ -25,3 +30,4 @@
     </device>
   </devices>
 </config-template>
+
