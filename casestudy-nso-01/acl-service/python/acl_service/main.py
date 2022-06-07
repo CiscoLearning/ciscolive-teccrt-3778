@@ -12,7 +12,6 @@ class ServiceCallbacks(Service):
         vars = ncs.template.Variables()
         template = ncs.template.Template(service)
 
-        # ACL_NAME, ACTION, DESCIPTION, DESTINATION_ADDRESS, DESTIONATION_PORT, DEVICE_NAME, PROTOCOL, SOURCE_ADDRESS, SOURCE_PORT
         vars.add("ACL_NAME", service.name)
 
         # Loop over rules 
@@ -20,10 +19,16 @@ class ServiceCallbacks(Service):
             vars.add("DESCRIPTION", f"Rule {rule.name} index {i} in ACL Service {service.name}. Description {rule.description}")
             vars.add("ACTION", rule.action)
             vars.add("PROTOCOL", rule.protocol)
+            # TODO: determine source address based on service input 
+            #       any, host, network 
             vars.add("SOURCE_ADDRESS", "any")
+            # TODO: determine source port 
             vars.add("SOURCE_PORT", "")
+            # TODO: base destionation address on service input 
             vars.add("DESTINATION_ADDRESS", "192.168.10.0 0.0.0.255")
+            # TODO: detemrine destination port based on service input 
             vars.add("DESTINATION_PORT", "eq 80")
+            # TODO: determine how to identify if log is set or not 
             vars.add("LOG", rule.log)
 
             # loop over devices to apply 
