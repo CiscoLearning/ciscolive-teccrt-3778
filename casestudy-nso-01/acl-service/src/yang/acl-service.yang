@@ -51,6 +51,7 @@ module acl-service {
           enum deny;
           enum permit; 
         }
+        default deny;
       }
     }
 
