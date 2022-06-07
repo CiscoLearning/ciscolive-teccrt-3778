@@ -35,14 +35,13 @@ class ServiceCallbacks(Service):
             )
             vars.add("RULE", acl_rule)
 
-            # TODO: determine how to identify if log is set or not
-
             # loop over devices to apply
             for device in service.device:
                 vars.add("DEVICE_NAME", device)
                 self.log.info(f"vars: {vars}")
                 template.apply("acl-service-template", vars)
 
+        # Add Default Rule
         self.log.info(f"Creating default rule as [{service.default.rule}]")
         ace_seq = (i + 10) * 10
         vars.add("LABEL_SEQ", ace_seq)
