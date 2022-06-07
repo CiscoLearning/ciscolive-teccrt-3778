@@ -120,15 +120,57 @@ cli {
 
 
 ## Preperation and Setup Instructions
-To prepare the CWS to work on this question you must...
+### Installing NSO 
+To prepare the CWS to work on this question you must first perform a local installation of NSO on the CWS.  The files can be downloaded from [DevNet](https://developer.cisco.com/docs/nso/#!getting-and-installing-nso). You will need the Linux installer as well as the IOS XE NED.  Assuming you download these files onto the CWS into the `~/Downloads` directory, you can install it with these commands: 
+
+```bash
+# Delete the placeholder ~/nso directory on the CWS 
+rm -rf ~/nso
+
+cd ~/Downloads
+
+# Make the signed download executable and run it 
+chmod +x nso-5.7.1.linux.x86_64.signed.bin 
+./nso-5.7.1.linux.x86_64.signed.bin 
+
+# Make the installer file executable 
+chmod +x nso-5.7.1.linux.x86_64.installer.bin
+
+# Perform a local installation of nso
+./nso-5.7.1.linux.x86_64.installer.bin --local-install ~/nso
+
+# Change into the NEDs directory for the newly installed NSO
+cd ~/nso/packages/neds
+
+# Extract the IOS NED into the local installation directory 
+tar -zxvf ~/Downloads/ncs-5.7-cisco-ios-6.77.10.tar.gz 
+
+# Add sourcing ~/nso/ncsrc to the bashrc file 
+echo "source ~/nso/ncsrc" >> ~/.bashrc 
+```
+
+### Starting up the NSO instance for the question
+To make it easier to get right into the question, a [`Makefile`](Makefile) has been included with several targets that handle the details of preparing the CWS for this question. 
 
 * `make start` 
+    - uses `ncs-netsim` to create a small network with 2 IOS CLI devices for development and testing
+    - uses `ncs-setup` to create a local NSO instance with the NEDs and package for the question
+    - starts the `ncs-netsim` network 
+    - starts nso and verifies it is fully up and operational 
+    - performs a sync-from on the netsim devices to nso 
 * `make clean` 
+    - shutdown nso and delete all files from the local instance 
+    - shutdown the netsim network and delete all files from the project
 
 > There are other targets in the Makefile that can be useful if diving deeper into the demo. Feel free to explore for details
 
 ## Documentation for Question 
 During the DevNet Expert Lab Exam candidates have access to relevant documentation to complete tasks.  While working on this sample question you should make use of the NSO documentation that is included with the application and available under `~/nso/docs`
+
+## Validating your answer 
+The directory [`validation-files`](validation-files) includes several XML files that can be loaded into NSO to verify your solution.  Files that start with `PASS` should load and apply configurations to the network. Files that start with `FAIL` should generate some error upon loading.  These are there to test constraints have been properly applied in the solution. 
+
+> Note: These validation files are provided to help with studying.  They are not a full grading service and it is possible that your solution may not fully meet the requirements if these work. Efforts have been made to provide robust examples for validation, but some elements may have been missed.
 
 ## Solution
 A fully working version of the NSO service is included in the director [`solution`](solution). You are encouraged to try to work through the question on your own before checking the solution.
@@ -137,4 +179,5 @@ Makefile targets have been created to startup an NSO instance using the solution
 
 * `make start-solution` 
 
-# Resources and Thanks 
+# Resources
+For more details on Cisco NSO, see the [DevNet NSO Page](https://developer.cisco.com/site/nso/).
