@@ -1,7 +1,7 @@
 # -*- mode: python; python-indent: 4 -*-
 import ncs
 from ncs.application import Service
-from utils import ios_acl_port_map, acl_address
+from .utils import ios_acl_port_map, acl_address, acl_port
 
 
 class ServiceCallbacks(Service):
@@ -26,11 +26,9 @@ class ServiceCallbacks(Service):
             vars.add("ACTION", rule.action)
             vars.add("PROTOCOL", rule.protocol)
             vars.add("SOURCE_ADDRESS", acl_address(rule.source.address))
-            # TODO: determine source port
-            vars.add("SOURCE_PORT", "")
+            vars.add("SOURCE_PORT", acl_port(rule.source.port))
             vars.add("DESTINATION_ADDRESS", acl_address(rule.destination.address))
-            # TODO: detemrine destination port based on service input
-            vars.add("DESTINATION_PORT", "eq 80")
+            vars.add("DESTINATION_PORT", acl_port(rule.destination.port))
             # TODO: determine how to identify if log is set or not
             vars.add("LOG", rule.log)
 
