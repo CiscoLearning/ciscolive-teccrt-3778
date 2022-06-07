@@ -67,3 +67,32 @@ def acl_port(port: str) -> str:
         # and port in configuration
         acl_port = f" eq {ios_acl_port_map[port]['name'] if port in ios_acl_port_map.keys() else port}"
     return acl_port
+
+
+def acl_rule_builder(
+    seq: int,
+    action: str,
+    protocol: str,
+    src_address: str,
+    src_port: int,
+    dst_address: str,
+    dst_port: int,
+    log: str,
+) -> str:
+    """Create a formated IOS ACL rule"""
+    # Create list of all components for rule
+    rule_components = [
+        str(seq),
+        str(action),
+        str(protocol),
+        acl_address(src_address),
+        acl_port(src_port),
+        acl_address(dst_address),
+        acl_port(dst_port),
+        str(log),
+    ]
+    # Join into a string
+    acl_rule = " ".join(rule_components)
+    # Replace an extra spaces from unused parts
+    acl_rule = " ".join(acl_rule.split())
+    return acl_rule
