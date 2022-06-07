@@ -1,0 +1,34 @@
+
+all:
+  hosts:
+    bdsol-aci12-apic1:
+      apic_host: 10.48.22.69
+  vars:
+    apic_use_proxy: no
+    apic_validate_certs: no
+    apic_username: admin
+    apic_password: password
+    private_key: candidate.key
+    certificate_name: admin
+    tenants:
+    - name: TECCRT-3778-01
+    - name: TECCRT-3778-02
+    apps_epgs:
+    - app_name: App01
+      tenant_name: TECCRT-3778-01
+      epgs:
+      - epg_name: EPG01
+      - epg_name: EPG02
+    - app_name: App02
+      tenant_name: TECCRT-3778-01
+      epgs:
+      - epg_name: EPG03
+      - epg_name: EPG04
+    - app_name: App03
+      tenant_name: TECCRT-3778-02
+      epgs:
+      - epg_name: EPG05
+      - epg_name: EPG06
+    
+
+

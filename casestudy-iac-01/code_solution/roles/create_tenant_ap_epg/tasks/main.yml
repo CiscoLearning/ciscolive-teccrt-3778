@@ -1,0 +1,63 @@
+
+- name: Declare aci_login
+  set_fact:
+    aci_login: &aci_login
+      hostname: '{{ apic_host }}'
+      username: '{{ apic_username }}'
+      #password: '{{ apic_password }}'
+      private_key: '{{ private_key }}'
+      certificate_name: '{{ certificate_name }}'
+      use_proxy: '{{ apic_use_proxy }}'
+      validate_certs: '{{ apic_validate_certs }}'
+
+
+- name: Retrieve date
+  ansible.builtin.shell: date
+  register: date
+  delegate_to: localhost
+
+#  - name: show date
+#    debug:
+#      var: date
+
+- name: Set unix_date
+  set_fact:
+    unix_date: '{{ date.stdout }}'
+
+- name: Create tenants
+  cisco.aci.aci_tenant:
+    <<: *aci_login
+    tenant: '{{ item.name }}'
+    description: "Created by Ansible {{ unix_date }}"
+  loop: '{{ tenants }}'
+  delegate_to: localhost
+
+- name: Create application profiles
+  cisco.aci.aci_ap:
+    <<: *aci_login
+    tenant: '{{ item.tenant_name }}'
+    ap: '{{ item.app_name }}'
+    description: "Created by Ansible {{ unix_date }}"
+  loop: '{{ apps_epgs }}'
+  delegate_to: localhost
+
+- name: Create EPGs - debug
+  debug:
+    var: item
+  loop: "{{ apps_epgs|subelements('epgs') }}"
+#  with_subelements:
+#  - '{{ apps_epgs }}'
+#  - epgs
+
+- name: Create EPGs
+  cisco.aci.aci_epg:
+    <<: *aci_login
+    tenant: '{{ item.0.tenant_name }}'
+    ap: '{{ item.0.app_name }}'
+    epg: '{{ item.1.epg_name }}'
+    description: "Created by Ansible {{ unix_date }}"
+  with_subelements:
+  - '{{ apps_epgs }}'
+  - epgs
+  delegate_to: localhost
+

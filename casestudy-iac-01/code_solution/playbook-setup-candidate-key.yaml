@@ -1,0 +1,22 @@
+
+- name: Setup canbdidate key file
+  hosts: bdsol-aci12-apic1
+  gather_facts: no
+
+  vars:
+    aci_login: &aci_login
+      hostname: '{{ apic_host }}'
+      username: '{{ apic_username }}'
+      password: '{{ apic_password }}'
+      use_proxy: '{{ apic_use_proxy }}'
+      validate_certs: '{{ apic_validate_certs }}'
+
+  tasks:
+  - name: Ensure we have a certificate installed
+    cisco.aci.aci_aaa_user_certificate:
+      <<: *aci_login
+      aaa_user: admin
+      name: admin
+      certificate_data: "{{ lookup('file', 'candidate.crt') }}"  # This will read the certificate data from a local file
+    delegate_to: localhost
+
