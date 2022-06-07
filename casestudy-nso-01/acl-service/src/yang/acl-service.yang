@@ -58,8 +58,10 @@ module acl-service {
       key name; 
 
       leaf name {
-        tailf:info "The name for this rule";
-        type string; 
+        tailf:info "The name for this rule.";
+        type string {
+          pattern '[a-zA-Z0-9]*';
+        } 
       }
 
       leaf description {
