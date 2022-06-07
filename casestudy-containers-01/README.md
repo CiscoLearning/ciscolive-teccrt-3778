@@ -6,7 +6,7 @@ The candidate must not only complete the `Dockerfile` but also complete a Bash s
 
 ## Starting the Task
 
-Prior to starting the work the database needs to be initialized.  This is done by running the following command:
+Prior to starting the work the database needs to be initialized.  This is done by running the following command either from the `code_start` directory or the `code_solution`:
 
 ```sh
 make DB_FILE=db/storage.db
