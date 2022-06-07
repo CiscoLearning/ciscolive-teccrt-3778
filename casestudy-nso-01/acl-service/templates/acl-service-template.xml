@@ -1,19 +1,24 @@
 <config-template xmlns="http://tail-f.com/ns/config/1.0">
   <devices xmlns="http://tail-f.com/ns/ncs">
     <device>
-      <!--
-          Select the devices from some data structure in the service
-          model. In this skeleton the devices are specified in a leaf-list.
-          Select all devices in that leaf-list:
-      -->
-      <name>{/device}</name>
+      <name>{$DEVICE_NAME}</name>
       <config>
-        <!--
-            Add device-specific parameters here.
-            In this skeleton the, java code sets a variable DUMMY, use it
-            to set something on the device e.g.:
-            <ip-address-on-device>{$DUMMY}</ip-address-on-device>
-        -->
+        <ip xmlns="urn:ios">
+          <access-list>
+            <extended>
+              <ext-named-acl>
+                <name>{$ACL_NAME}</name>
+                <ext-access-list-rule>
+                  <rule>remark {$DESCRIPTION}</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <!-- <rule>permit tcp any 192.168.0.0 0.0.0.255 eq 80</rule> -->
+                  <rule>{$ACTION} {$PROTOCOL} {$SOURCE_ADDRESS} {$SOURCE_PORT} {$DESTINATION_ADDRESS} {$DESTINATION_PORT} {$LOG}</rule>
+                </ext-access-list-rule>
+              </ext-named-acl>
+            </extended>
+          </access-list>
+        </ip>
       </config>
     </device>
   </devices>
