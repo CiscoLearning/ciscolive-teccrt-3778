@@ -28,7 +28,7 @@ When prompted for a password, use 1234QWer! again.
 Clone this git repo onto the CWS within the CML lab topology.  Then change directory to `casestudy-telemetry-01` and run the following command:
 
 ```sh
-docker-compose up -d
+make all
 ```
 
 This will start Telegraf on the CWS listening on the correct port.

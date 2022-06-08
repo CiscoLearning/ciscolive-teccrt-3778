@@ -2,12 +2,11 @@ no telemetry ietf subscription 1
 !
 telemetry ietf subscription 1
  encoding encode-kvgpb
- filter xpath "/process-memory-ios-xe-oper:memory-usage-processes/memory-usage-process/225/IP ARP Retry Ager/allocated-memory"
+ ! TODO: Fix the XPath so that the telemetry subscription is valid.
+ filter xpath "/process-memory-ios-xe-oper:memory-usage-processes/memory-usage-process/name/IP ARP Retry Ager"
  source-address 192.168.5.150
  source-vrf management
  stream yang-push
  update-policy periodic 1000
  receiver ip address 192.168.4.27 57000 protocol grpc-tcp
-!
-netconf-yang
-restconf
+
