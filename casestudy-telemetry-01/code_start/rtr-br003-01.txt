@@ -9,4 +9,3 @@ telemetry ietf subscription 1
  stream yang-push
  update-policy periodic 1000
  receiver ip address 192.168.4.27 57000 protocol grpc-tcp
-
