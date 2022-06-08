@@ -25,6 +25,7 @@ setup-nso-solution:
 
 clean-nso: stop-nso
 	rm -rf logs/ ncs-cdb/ packages/ scripts/ state/ ncs.conf README.ncs target/ storedstate
+	rm -rf acl-service/load-dir
 
 start-nso: 
 	ncs
