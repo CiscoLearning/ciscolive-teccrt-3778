@@ -2,7 +2,7 @@ lab:
   description: ""
   notes: ""
   title: Case Study Telemetry
-  version: 0.0.4
+  version: 0.0.5
 nodes:
   - id: n0
     label: rtr-br003-01
@@ -65,7 +65,29 @@ nodes:
       \ as sch-smart-licensing@cisco.com\n ! the email address configured in Cisco\
       \ Smart License Portal will be used as contact email address to send SCH notifications.\n\
       \ contact-email-addr sch-smart-licensing@cisco.com\n profile \"CiscoTAC-1\"\n\
-      \  active\n  destination transport-method http\n!\n!\n!\n!\n!\n!\nend"
+      \  active\n  destination transport-method http\n!\n!\nevent manager applet do-ssh\
+      \ authorization bypass\n       event timer cron cron-entry \"@reboot\" maxrun\
+      \ 130\n      action 001 wait 10\n      action 002 cli command \"enable\"\n \
+      \     action 003 cli command \"show run | inc crypto pki trustpoint TP-self-signed\"\
+      \n      action 004 set self_cert $_cli_result\n      action 005 cli command\
+      \ \"config t\"\n      action 006 cli command \"crypto key zeroize rsa\"  pattern\
+      \ \"remove|No Signature\"\n      action 007 regexp \"remove\" \"$_cli_result\"\
+      \n      action 008 if $_regexp_result eq \"1\"\n      action 009  cli command\
+      \ \"yes\"\n      action 010 end\n      action 011 cli command \"crypto key generate\
+      \ rsa modulus 2048\"\n      action 012 regexp \"(TP-self-signed-[0-9]+)\" $self_cert\
+      \ match tp_name\n      action 013 if $_regexp_result eq \"1\"\n      action\
+      \ 014  cli command \"no crypto pki trustpoint $tp_name\" pattern \"sure\"\n\
+      \      action 015  cli command \"y\"\n      action 016  cli command \"no ip\
+      \ http secure-server\"\n      action 017  cli command \"ip http secure-server\"\
+      \n      action 018 end\n      action 019 cli command \"int range gi1-2\"\n \
+      \     action 020 cli command \"no shut\"\n      action 021 cli command \"no\
+      \ event manager applet do-ssh\"\n      action 022 cli command \"end\"\n    \
+      \  action 023 cli command \"write mem\"\n!\n!\n!\n!\ntelemetry ietf subscription\
+      \ 1\n encoding encode-kvgpb\n filter xpath \"/process-memory-ios-xe-oper:memory-usage-processes/memory-usage-process/225/IP\
+      \ ARP Retry Ager/allocated-memory\"\n source-address 192.168.5.150\n source-vrf\
+      \ management\n stream yang-push\n update-policy periodic 1000\n receiver ip\
+      \ address 192.168.4.27 57000 protocol grpc-tcp\n!\nnetconf-yang\nrestconf\n\
+      !\nend"
     hide_links: null
     ram: 4096
     cpus: 1
@@ -263,7 +285,7 @@ nodes:
     node_definition: unmanaged_switch
     x: -800
     y: 0
-    configuration: ums-52cac65a-f1
+    configuration: ums-d5133034-3c
     hide_links: null
     ram: 0
     cpus: 0
@@ -551,13 +573,13 @@ links:
     label: sw-br003-01-GigabitEthernet0/2<->user-01-GigabitEthernet0/0
   - id: l4
     i1: i0
-    n1: n5
-    i2: i0
-    n2: n4
-    label: ext-conn-0-port<->cws-ens3
-  - id: l5
-    i1: i1
     n1: n4
-    i2: i2
-    n2: n2
-    label: cws-ens4<->candidate-network-port2
+    i2: i0
+    n2: n5
+    label: cws-ens3<->Internet-port
+  - id: l5
+    i1: i2
+    n1: n2
+    i2: i1
+    n2: n4
+    label: candidate-network-port2<->cws-ens4
