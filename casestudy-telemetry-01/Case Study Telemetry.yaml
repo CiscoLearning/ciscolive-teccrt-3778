@@ -83,8 +83,8 @@ nodes:
       \     action 020 cli command \"no shut\"\n      action 021 cli command \"no\
       \ event manager applet do-ssh\"\n      action 022 cli command \"end\"\n    \
       \  action 023 cli command \"write mem\"\n!\n!\n!\n!\ntelemetry ietf subscription\
-      \ 1\n encoding encode-kvgpb\n filter xpath \"/process-memory-ios-xe-oper:memory-usage-processes/memory-usage-process/225/IP\
-      \ ARP Retry Ager/allocated-memory\"\n source-address 192.168.5.150\n source-vrf\
+      \ 1\n encoding encode-kvgpb\n filter xpath \"/process-memory-ios-xe-oper:memory-usage-processes/memory-usage-process/IP\
+      \ ARP Retry Ager\"\n source-address 192.168.5.150\n source-vrf\
       \ management\n stream yang-push\n update-policy periodic 1000\n receiver ip\
       \ address 192.168.4.27 57000 protocol grpc-tcp\n!\nnetconf-yang\nrestconf\n\
       !\nend"
