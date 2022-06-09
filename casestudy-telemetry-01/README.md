@@ -1,4 +1,4 @@
-# Troubleshoot YANG XPath for Telemetry Subscription
+# Fix A Model-Driven Telemetry Subscription
 
 This case study deals with using YANG-based model-driven telemetry.  In the setup for this task, a subscription has been created to monitor memory allocation utilization of a known-problematic process, but the subscription is being reported as "Invalid".  One must use tools such as `pyang` or YANG Suite to determine the correct XPath and fix the telemetry subscription.
 
