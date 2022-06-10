@@ -10,7 +10,7 @@ You can download and find instructions for the CWS at the [Software and Equipmen
 
 * [Infrastructure as Code 01](casestudy-iac-01): Using Ansible to manage ACI
 * [Network Services with NSO 01](casestudy-nso-01): Creating a network service for managing ACLs
-* [Containers 01](casestudy-containers-01): Containerizing a Python Application
+* [Containers 01](casestudy-containers-01): Containerize an App Using Docker
 * [Security 01](casestudy-security-01):
-* [Telemetry 01](casestudy-telemetry-01): YANG based model driven telemetry troubleshooting
+* [Telemetry 01](casestudy-telemetry-01): Fix A Model-Driven Telemetry Subscription
 * [REST API 01](casestudy-restapi-01): Exploring the NetBox REST API

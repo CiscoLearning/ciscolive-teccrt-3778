@@ -1,4 +1,4 @@
-# Working With Docker Containers
+# Containerize an App Using Docker
 
 This case study explores how to containerize a Python application using Docker.  The intent is to complete a `Dockerfile` that properly containerizes the application while allowing for persistent storage to be used (for the app's DB), providing a flexible path to the database using environment variables, and being flexible with the mapped port.
 
