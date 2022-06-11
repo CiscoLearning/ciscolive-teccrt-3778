@@ -20,7 +20,6 @@ class ServiceCallbacks(Service):
             ace_seq = (i + 1) * 10
             vars.add("LABEL_SEQ", ace_seq)
             vars.add("DESC_SEQ", ace_seq + 1)
-            vars.add("SEQ", ace_seq + 2)
             vars.add("LABEL", f"Rule {rule.name} in ACL Service {service.name}")
             vars.add("DESCRIPTION", f"Description {rule.description}")
             acl_rule = acl_rule_builder(
@@ -46,7 +45,6 @@ class ServiceCallbacks(Service):
         ace_seq = (i + 10) * 10
         vars.add("LABEL_SEQ", ace_seq)
         vars.add("DESC_SEQ", ace_seq + 1)
-        vars.add("SEQ", ace_seq + 2)
         vars.add("LABEL", f"Default Rule in ACL Service {service.name}")
         vars.add("DESCRIPTION", f"Description {service.default.rule} all")
         acl_rule = acl_rule_builder(
