@@ -1,0 +1,2 @@
+V	320605151319Z		1000	unknown	/C=BE/ST=Brussels/O=Example.com/OU=teccrt-3778/CN=teccrt-3778.example.com/emailAddress=rsmeyers@cisco.com
+V	320608130823Z		1001	unknown	/C=BE/ST=Vlaams Brabant/O=Example/OU=teccrt-3778/CN=teccrt-3778 CA 01/emailAddress=rsmeyers@cisco.com

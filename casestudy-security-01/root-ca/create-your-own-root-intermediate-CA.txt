@@ -1,0 +1,22 @@
+openssl genrsa -aes256 -out private/ca.teccrt-3778.example.com.key.pem 4096
+
+openssl req -config openssl_root.cnf -new -x509 -sha512 -extensions v3_ca -key private/ca.teccrt-3778.example.com.key.pem -out certs/ca.teccrt-3778.example.com.crt.pem -days 3650 -set_serial 0
+
+
+openssl req -config intermediate/openssl_intermediate.cnf -new -newkey rsa:4096 -keyout intermediate/private/int.teccrt-3778.example.com.key.pem -out intermediate/csr/int.teccrt-3778.example.com.csr
+
+openssl ca -config openssl_root.cnf -extensions v3_intermediate_ca -days 3650 -notext -md sha512 -in intermediate/csr/int.teccrt-3778.example.com.csr -out intermediate/certs/int.teccrt-3778.example.com.crt.pem
+
+
+cat intermediate/certs/int.teccrt-3778.example.com.crt.pem certs/ca.teccrt-3778.example.com.crt.pem > intermediate/certs/chain.teccrt-3778.example.com.crt.pem
+
+
+openssl req -out intermediate/csr/demo.teccrt-3778.example.com.csr.pem -newkey rsa:2048 -nodes -keyout intermediate/private/demo.teccrt-3778.example.com.key.pem -config intermediate/openssl_csr_san.cnf
+
+
+openssl ca -config intermediate/openssl_intermediate.cnf -extensions server_cert -days 3750 -notext -md sha512 -in intermediate/csr/demo.teccrt-3778.example.com.csr.pem -out intermediate/certs/demo.teccrt-3778.example.com.crt.pem
+
+
+
+
+
