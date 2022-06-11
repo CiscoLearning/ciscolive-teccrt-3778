@@ -17,7 +17,9 @@ The following requirements have been provided by the network architect:
     * See below examples for formating details
 * Variable names and values for the XML template have been defined in Python already. Use these names in the XML template.
 * Access list and rule names cannot contain any white spaces. This must be enforced in the YANG model.
-    * The regex pattern `[\S]*` can be used to match valid names
+    * The regex pattern `'[\S]*'` can be used to match valid names 
+    
+        > Note: Use single quotes around pattern OR escape the escape char (`"[\\S]*"`)
 * Valid actions for a rule are "deny" or "permit" only. This must be enforced in the YANG model.
 * Valid protocols for a rule are "tcp" or "udp" only. This must be enforced in the YANG model.
 * Source and Destination address leafs should support either IPv4 address or prefixes using the `ietf-inet-types`. This must be enforced in the YANG model.
