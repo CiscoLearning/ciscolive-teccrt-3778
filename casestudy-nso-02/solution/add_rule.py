@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 import ipaddress
 import argparse
 import os
@@ -42,7 +43,20 @@ def nso_details(args: argparse.Namespace) -> tuple[str, str, str]:
 def build_payload(args: argparse.Namespace) -> dict:
     """Create a dictionary payload for the new rule"""
 
-    # Configure mandatory values in payload
+    # TODO (alt): Create a Python object representing the payload for creating a new rule
+    #             Be sure that the payload supports all possible input variations for 
+    #             mandatory and optional parameters
+    # Notes: 
+    #   - The following arguments are available from the `args` parameter
+    #     args.acl > access-list name 
+    #     args.rule > rule name 
+    #     args.action > permit/deny value 
+    #     args.protocol > tcp/udp 
+    #     args.source > source address as ipaddress.IPv4Address or IPv4.Network object
+    #     args.destination > destination address as ipaddress.IPv4Address or IPv4.Network object
+    #     args.sport / args.dport > source/destionation ports 
+    #     args.description > optional description for rule entry 
+    #     args.log > true/false on whether to log hits to rule 
     payload = {
         "acl-service:rule": [
             {
@@ -77,10 +91,13 @@ def build_payload(args: argparse.Namespace) -> dict:
     return payload
 
 
-def test_nso(server: str):
+def test_nso(server: str, username, password):
     """Verify NSO server address is reachable."""
     url = f"{server}/.well-known/host-meta"
-    response = requests.get(url)
+    headers = {
+        "Accept": "application/yang-data+json",
+    }
+    response = requests.get(url, headers=headers, auth=(username, password))
     response.raise_for_status()
 
 
@@ -88,8 +105,22 @@ def add_rule(
     server: str, username: str, password: str, args: argparse.Namespace
 ) -> bool:
     """Add a new rule to an ACL Service on an NSO Server"""
-    test_nso(server)
+    test_nso(server, username, password)
 
+    # TODO: Set the value of URL to the correct path to add a new rule to an ACL
+    # Notes: 
+    #   - the variable `server` is equal to the NSO address including the protocol and port
+    #     for example: http://127.0.0.1:8080
+    #   - The following arguments are available from the `args` parameter
+    #     args.acl > access-list name 
+    #     args.rule > rule name 
+    #     args.action > permit/deny value 
+    #     args.protocol > tcp/udp 
+    #     args.source > source address as ipaddress.IPv4Address or IPv4.Network object
+    #     args.destination > destination address as ipaddress.IPv4Address or IPv4.Network object
+    #     args.sport / args.dport > source/destionation ports 
+    #     args.description > optional description for rule entry 
+    #     args.log > true/false on whether to log hits to rule 
     url = f"{server}/restconf/data/acl-service:access-list={args.acl}"
     headers = {
         "Content-type": "application/yang-data+json",
@@ -100,13 +131,18 @@ def add_rule(
     response = requests.post(url, json=body, headers=headers, auth=(username, password))
 
     # Check response status code for expected values for conditions
+    # TODO: Leverage the response status code to determine results based on comments for each test
+    # 1. A successful creation of new rule 
     if response.status_code == 201:
         return True
-    elif response.status_code == 409:
+    # 2. An error due to the rule already existing 
+    elif response.status_code == 409:  # 409 Conflict
         raise ValueError(f"rule {args.rule} already exists on access-list {args.acl}")
-    elif response.status_code == 400:
+    # 3. An error due to the named access-list not existing
+    elif response.status_code == 400: # 400 Bad Request
         raise ValueError(f"access-list {args.acl} not found.")
-    elif response.status_code == 404:
+    # 4. An error due to the access-list service not being available in NSO 
+    elif response.status_code == 404: # 404 Not Found
         raise ValueError(f"The acl-service:access-list not found on the NSO server.")
     else:
         return False
