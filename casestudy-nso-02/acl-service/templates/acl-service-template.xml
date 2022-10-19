@@ -1,0 +1,27 @@
+<config-template xmlns="http://tail-f.com/ns/config/1.0">
+  <devices xmlns="http://tail-f.com/ns/ncs">
+    <device>
+      <name>{$DEVICE_NAME}</name>
+      <config>
+        <ip xmlns="urn:ios">
+          <access-list>
+            <extended>
+              <ext-named-acl>
+                <name>{$ACL_NAME}</name>
+                <ext-access-list-rule>
+                  <rule>{$LABEL_SEQ} remark {$LABEL}</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <rule>{$DESC_SEQ} remark {$DESCRIPTION}</rule>
+                </ext-access-list-rule>
+                <ext-access-list-rule>
+                  <rule>{$RULE}</rule>
+                </ext-access-list-rule>
+              </ext-named-acl>
+            </extended>
+          </access-list>
+        </ip>
+      </config>
+    </device>
+  </devices>
+</config-template>

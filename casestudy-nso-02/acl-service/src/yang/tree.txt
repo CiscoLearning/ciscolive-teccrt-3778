@@ -1,0 +1,18 @@
+module: acl-service
+  +--rw access-list* [name]
+     +--rw name                        string
+     +--rw device*                     -> /ncs:devices/device/name
+     +--rw default
+     |  +--rw rule?   enumeration
+     +--rw rule* [name]
+        +--rw name           string
+        +--rw description?   string
+        +--rw action         enumeration
+        +--rw protocol       enumeration
+        +--rw source
+        |  +--rw address    union
+        |  +--rw port?      uint16
+        +--rw destination
+        |  +--rw address    union
+        |  +--rw port       uint16
+        +--rw log?           empty
