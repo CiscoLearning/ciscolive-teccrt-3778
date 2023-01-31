@@ -41,7 +41,7 @@ This question asks for three specific `curl` commands to be provided.
     * Will need to find an API to list these values 
 
 ## Part 1: Creation of an authentication token 
-The [NetBox Docs](http://0.0.0.0:8000/static/docs/rest-api/authentication/#initial-token-provisioning) provide details on how to create a token for a user. 
+The [NetBox Docs](http://0.0.0.0:8000/static/docs/integrations/rest-api/#initial-token-provisioning) provide details on how to create a token for a user. 
 
 This curl request will generate a token for user and return the details in JSON.
 
@@ -78,7 +78,7 @@ curl -X POST \
 </details>
 
 ## Part 2: Filtered Device Listing 
-All the details needed on how to filter API requests with NetBox are listed in the [Docs](http://0.0.0.0:8000/static/docs/rest-api/filtering/).  Also of use is the [OpenAPI interface](http://0.0.0.0:8000/api/docs/) to the API available for NetBox.  The `devices` endpoint is under the `dcim` application/category. 
+All the details needed on how to filter API requests with NetBox are listed in the [Docs](http://0.0.0.0:8000/static/docs/reference/filtering/).  Also of use is the [OpenAPI interface](http://0.0.0.0:8000/api/docs/) to the API available for NetBox.  The `devices` endpoint is under the `dcim` application/category. 
 
 We can build up the full filtered request one requirement at a time. 
 
@@ -320,12 +320,12 @@ We can build up the full filtered request one requirement at a time.
     </details>
 
 ## Part 3: An API for interface type choices 
-The [NetBox Docs on Filtering include a section on using choice fields](http://0.0.0.0:8000/static/docs/rest-api/filtering/#filtering-by-choice-field) that provide all the details needed to build this API request.
+The [NetBox Docs on Filtering include a section on using choice fields](http://0.0.0.0:8000/static/docs/reference/filtering/#filtering-by-choice-field) that provide all the details needed to build this API request.
 
 ```bash
 curl -X OPTIONS "http://0.0.0.0:8000/api/dcim/interfaces/" \
     -H  "accept: application/json" \
-    -H  "Authorization: Token 893f8c2e247fcafbbf6c12b77e73664bc4b25a75" \
+    -H  "Authorization: Token 0123456789abcdef0123456789abcdef01234567" \
     | jq .actions.POST.type
 ```
 
