@@ -1,0 +1,2 @@
+# Pulling plugin from GitLab when developing or fixing bugs. Pull from PyPi once published
+netbox-initializers==3.3.3

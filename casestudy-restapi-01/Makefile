@@ -1,14 +1,17 @@
 SHELL := /bin/bash
 
-start: setup startup-netbox check-netbox-up device-types-setup device-creation
+start: setup startup-netbox check-netbox-up run_initializer device-types-setup device-creation
 
 setup: 
 	echo "Preparing to run netbox-docker"
 	if [[ ! -d netbox-docker ]]; then git clone -b release https://github.com/netbox-community/netbox-docker.git; else cd netbox-docker && git pull; fi
 	cp netbox-configs/docker-compose.override.yml netbox-docker/
+	cp netbox-configs/Dockerfile-Plugins netbox-docker/
+	cp netbox-configs/plugin_requirements.txt netbox-docker/
+	cp netbox-configs/plugins.py netbox-docker/configuration/
 	cp -r netbox-configs/demo-initializers netbox-docker/
 	cp netbox-configs/000_users.py netbox-docker/startup_scripts
-	cd netbox-docker && docker-compose pull
+	cd netbox-docker && docker-compose build --no-cache && docker-compose pull
 
 startup-netbox:
 	echo "Starting netbox-docker"
@@ -50,3 +53,7 @@ device-creation:
 device-clean: 
 	echo "Deleteing all network devices from NetBox"
 	netbox-configs/device_clean.py 
+
+run_initializer:
+	@echo "\n== Initializing NetBox with starting data"
+	cd netbox-docker && docker-compose exec netbox ./manage.py load_initializer_data --path /opt/netbox/initializer_data

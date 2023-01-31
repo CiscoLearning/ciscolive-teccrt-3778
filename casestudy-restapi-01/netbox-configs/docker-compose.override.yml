@@ -4,4 +4,20 @@ services:
     ports:
     - 8000:8080
     volumes:
-    - ./demo-initializers:/opt/netbox/initializers:z,ro ## <-- Replace `my_initializers` with the name of your folder
+    - ./demo-initializers:/opt/netbox/initializer_data:z,ro ## <-- Replace `my_initializers` with the name of your folder
+    build: 
+      context: .
+      dockerfile: Dockerfile-Plugins
+    image: netbox:latest-plugins
+
+  netbox-worker:
+    build: 
+      context: .
+      dockerfile: Dockerfile-Plugins
+    image: netbox:latest-plugins
+
+  netbox-housekeeping:
+    build: 
+      context: .
+      dockerfile: Dockerfile-Plugins
+    image: netbox:latest-plugins
