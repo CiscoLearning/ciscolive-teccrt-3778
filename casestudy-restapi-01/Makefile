@@ -10,7 +10,6 @@ setup:
 	cp netbox-configs/plugin_requirements.txt netbox-docker/
 	cp netbox-configs/plugins.py netbox-docker/configuration/
 	cp -r netbox-configs/demo-initializers netbox-docker/
-	cp netbox-configs/000_users.py netbox-docker/startup_scripts
 	cd netbox-docker && docker-compose build --no-cache && docker-compose pull
 
 startup-netbox:
