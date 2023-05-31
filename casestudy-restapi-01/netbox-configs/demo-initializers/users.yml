@@ -20,4 +20,14 @@ expert:
   is_superuser: True 
   is_staff: False 
   password: 1234QWer! 
+  api_token: 0123456789abcdef0123456789abcdef01expert
+
+admin: 
+  first_name: admin 
+  last_name: admin 
+  is_active: True
+  is_superuser: True 
+  is_staff: True 
+  password: admin 
+  api_token: 0123456789abcdef0123456789abcdef01234567
 
