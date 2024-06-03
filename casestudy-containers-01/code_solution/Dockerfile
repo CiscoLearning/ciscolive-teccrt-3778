@@ -14,10 +14,10 @@ EXPOSE 80
 # Docker user that this container will use this mount point.
 VOLUME /app/db
 
-# TODO: Indicate the app uses an environment variable, STORAGE_DB_API
+# TODO: Indicate the app uses an environment variable, STORAGE_API_DB
 # NOTE: We have a constraint in the question that the default needs to be ./storage.db
 # The ENV command indicates which environment variables are available for user configuration.
-ENV STORAGE_DB_API=./storage.db
+ENV STORAGE_API_DB=./storage.db
 
 WORKDIR /app
 
