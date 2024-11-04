@@ -14,6 +14,7 @@ On completion of this task, you should meet the following requirements:
   * Name as following:
     * Key file: www.teccrt-3778.example.com.key
     * CSR File: www.teccrt-3778.example.com.csr
+  * The generaged key file should NOT be encrypted
 * Correct our existing nginx.conf to correctly includes our existing certificate:
   * Use the files name demo.teccrt-3778.example.com.*
   * You are allowed to create new files for this task to make the existing nginx.conf work correctly with the provide key/certificate
