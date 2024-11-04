@@ -1,0 +1,2 @@
+openssl req -new -newkey rsa:1024 -nodes \
+   -keyout www.teccrt-3778.example.com.key -out www.teccrt-3778.example.com.csr
