@@ -4,17 +4,19 @@ start: setup startup-netbox check-netbox-up run_initializer device-types-setup d
 
 setup: 
 	echo "Preparing to run netbox-docker"
-	if [[ ! -d netbox-docker ]]; then git clone -b release https://github.com/netbox-community/netbox-docker.git; else cd netbox-docker && git pull; fi
+	if [[ ! -d netbox-docker ]]; then git clone -b 2.4.0 https://github.com/netbox-community/netbox-docker.git; else cd netbox-docker; fi
 	cp netbox-configs/docker-compose.override.yml netbox-docker/
 	cp netbox-configs/Dockerfile-Plugins netbox-docker/
 	cp netbox-configs/plugin_requirements.txt netbox-docker/
 	cp netbox-configs/plugins.py netbox-docker/configuration/
 	cp -r netbox-configs/demo-initializers netbox-docker/
-	cd netbox-docker && docker-compose build --no-cache && docker-compose pull
+	cd netbox-docker && docker-compose pull && docker-compose build --no-cache
 
 startup-netbox:
 	echo "Starting netbox-docker"
-	cd netbox-docker && docker-compose up -d
+	cd netbox-docker && docker-compose up -d postgres redis redis-cache netbox
+	sleep 90
+	cd netbox-docker && docker-compose up -d 
 
 check-netbox-up: 
 	echo "Waiting for NetBox to be available"
