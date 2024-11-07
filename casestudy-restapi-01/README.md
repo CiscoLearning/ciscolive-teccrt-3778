@@ -22,6 +22,8 @@ To prepare the CWS to work on this question you must first startup a NetBox inst
     - Uses customizations from [`netbox-configs`](netbox-configs) to get it ready for this demo
     - Adds all Cisco device types from the `device-types-library` project
     - Creates 1000 devices in NetBox that are a mixture of Nexus and Catlyst switches with different status, site and tenant values 
+
+    > Note: If there is an error after trying `make start`, this typically indicates a timeout during part of the startup. Simply re-run `make start` and it should start the second time.
 * `make clean` 
     - Shutdown and delete the NetBox server from the system 
 
